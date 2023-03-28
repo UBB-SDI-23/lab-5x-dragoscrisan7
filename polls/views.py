@@ -13,7 +13,7 @@ class StudentList(generics.ListCreateAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = {'favoriteNumber': ['gt', 'lt']}
+    filterset_fields = {'CNP': ['gt', 'lt']}
 
 
 class StudentDetails(generics.RetrieveUpdateDestroyAPIView):
@@ -27,7 +27,7 @@ class StudentDetails(generics.RetrieveUpdateDestroyAPIView):
         Stid = pk or request.query_params.get('id')
         student = self.get_object2(Stid)
         group = student.GroupId
-        student_serializer = self.serializer_class(student, fields=('id', 'firstname', 'name', 'favoriteNumber',
+        student_serializer = self.serializer_class(student, fields=('id', 'firstname', 'name', 'CNP',
                                                                     'favorite_colour'), many=False)
         group_serializer = GroupSerializer(group, read_only=True, fields=('id', 'groupNr', 'groupNickname', 'language',
                                                                           'year'))
@@ -52,7 +52,7 @@ class GroupDetails(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = GroupSerializer
 
 
-class StudentGroupUpdateView(generics.UpdateAPIView):
+class StudentGroupUpdateView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
@@ -66,11 +66,14 @@ class StudentGroupUpdateView(generics.UpdateAPIView):
         students_data = self.request.data
         for student_data in students_data:
             try:
-                student = Student.objects.get(id=student_data['id'])
+                student = Student.objects.get(CNP=student_data['CNP'])
+                student.GroupId = group
+                student.save()
             except Student.DoesNotExist:
-                continue  # Skip
-            student.GroupId = group
-            student.save()
+                Student.objects.create(firstname=student_data['firstname'], name=student_data['name'],
+                                       CNP=student_data['CNP'],
+                                       favorite_colour=student_data['favorite_colour'],
+                                       GroupId=group)
 
         return Response({'message': 'Students moved to group successfully.'}, status=status.HTTP_200_OK)
 

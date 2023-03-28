@@ -15,12 +15,12 @@ class Group(models.Model):
 class Student(models.Model):
     firstname = models.CharField(max_length=200, default="")
     name = models.CharField(max_length=200, default="")
-    favoriteNumber = models.IntegerField(default=0)
+    CNP = models.IntegerField(default=0)
     favorite_colour = models.CharField(max_length=200, default='blue')
     GroupId = models.ForeignKey(Group, related_name='students', on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = ['name', 'firstname', 'GroupId']
+        unique_together = ['CNP']
 
     def __str__(self) -> str:
         return self.name

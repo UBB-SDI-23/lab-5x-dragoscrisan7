@@ -26,7 +26,7 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
 class StudentSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = Student
-        fields = ('id', 'firstname', 'name', 'favoriteNumber', 'favorite_colour', 'GroupId')
+        fields = ('id', 'firstname', 'name', 'CNP', 'favorite_colour', 'GroupId')
 
 
 class GroupSerializer(DynamicFieldsModelSerializer):
