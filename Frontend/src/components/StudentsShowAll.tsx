@@ -5,7 +5,7 @@ export const StudentsShowAll = () => {
     const [students, setStudents] = useState([])
 
     useEffect(() =>{
-        fetch("http://13.50.240.137/students/")
+        fetch("https://13.50.240.137/students/")
             .then(res => res.json())
             .then((data) => setStudents(data));
     }, []);
