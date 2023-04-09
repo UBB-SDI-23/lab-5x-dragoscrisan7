@@ -13,6 +13,7 @@ import { AllStudents } from "./components/students/AllStudents";
 import { StudentDetails } from "./components/students/StudentDetails";
 import { StudentDelete } from "./components/students/StudentDelete";
 import { StudentAdd } from "./components/students/StudentAdd";
+import { GroupDetails } from "./components/groups/GroupDetails";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
 					<Route path="/students/:studentId/edit" element={<StudentDetails />} />
 					<Route path="/students/:studentId/delete" element={<StudentDelete />} />
 					<Route path="/students/add" element={<StudentAdd />} />
+          <Route path="groups/:groupId/details" element={<GroupDetails />} />
         </Routes>
       </Router>
     </React.Fragment>

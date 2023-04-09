@@ -68,11 +68,11 @@ export const AllStudents = () => {
 									</TableCell>
 									<TableCell component="th" scope="row">
 										<Link to={`/students/${student.id}/details`} title="View course details">
-											{student.name}
+											{student.firstname}
 										</Link>
 									</TableCell>
 									<TableCell align="right">{student.name}</TableCell>
-									<TableCell align="right">{student.GroupId}</TableCell>
+									<TableCell align="right">{student.Group?.groupNr}</TableCell>
 									<TableCell align="right">
 										<IconButton
 											component={Link}
@@ -83,7 +83,10 @@ export const AllStudents = () => {
 											</Tooltip>
 										</IconButton>
 
-										<IconButton component={Link} sx={{ mr: 3 }} to={`/students/${student.id}/edit`}>
+										<IconButton 
+											component={Link} 
+											sx={{ mr: 3 }} 
+											to={`/students/${student.id}/edit`}>
 											<EditIcon />
 										</IconButton>
 

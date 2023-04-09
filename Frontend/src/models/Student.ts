@@ -1,8 +1,11 @@
+import { Group } from './Group';
+
 export interface Student{
-    id: number;
+    id?: number;
     firstname: string;
     name: string;
     CNP: number;
     favorite_colour: string;
     GroupId: number;
+    Group?: Group;
 }
