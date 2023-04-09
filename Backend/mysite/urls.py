@@ -31,7 +31,7 @@ schema_view = swagger_get_schema_view(
 
 
 urlpatterns = [
-    path('', include('polls.urls')),
+    path('api/', include('polls.urls')),
     path('admin/', admin.site.urls),
     path('api/v1/',
          include([
