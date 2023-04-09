@@ -27,7 +27,7 @@ export const AllStudents = () => {
 
 	useEffect(() => {
 		setLoading(true);
-		fetch(`${BACKEND_API_URL}/students`)
+		fetch(`${BACKEND_API_URL}/students/`)
 			.then((response) => response.json())
 			.then((data) => {
 				setStudents(data);

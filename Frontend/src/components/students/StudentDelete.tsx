@@ -10,7 +10,7 @@ export const StudentDelete = () => {
 
 	const handleDelete = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
-		await axios.delete(`${BACKEND_API_URL}/students/${studentId}`);
+		await axios.delete(`${BACKEND_API_URL}/students/${studentId}/`);
 		// go to courses list
 		navigate("/students");
 	};

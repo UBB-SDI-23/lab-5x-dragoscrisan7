@@ -35,7 +35,7 @@ export const StudentAdd = () => {
 	const fetchSuggestions = async (query: string) => {
 		try {
 			const response = await axios.get<Group[]>(
-				`${BACKEND_API_URL}/groups/autocomplete?query=${query}`
+				`${BACKEND_API_URL}/groups/autocomplete?query=${query}/`
 			);
 			const data = await response.data;
 			setGroups(data);

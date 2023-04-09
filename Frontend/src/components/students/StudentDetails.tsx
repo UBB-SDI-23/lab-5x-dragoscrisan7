@@ -18,7 +18,7 @@ export const StudentDetails = () => {
 			// TODO: use axios instead of fetch
 			// TODO: handle errors
 			// TODO: handle loading state
-			const response = await fetch(`${BACKEND_API_URL}/students/${studentId}`);
+			const response = await fetch(`${BACKEND_API_URL}/students/${studentId}/`);
 			const student = await response.json();
 			setStudent(student);
 		};
