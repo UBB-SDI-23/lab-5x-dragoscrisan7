@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BACKEND_API_URL } from "../../constants";
 import { Student } from "../../models/Student";
+import { Group } from "../../models/Group";
 import ReadMoreIcon from "@mui/icons-material/ReadMore";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -72,7 +73,7 @@ export const AllStudents = () => {
 										</Link>
 									</TableCell>
 									<TableCell align="right">{student.name}</TableCell>
-									<TableCell align="right">{student.Group?.groupNr}</TableCell>
+									<TableCell align="right">{(student.GroupId as Group)?.groupNr}</TableCell>
 									<TableCell align="right">
 										<IconButton
 											component={Link}

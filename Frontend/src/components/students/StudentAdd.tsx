@@ -1,11 +1,14 @@
 import {
 	Autocomplete,
+	Select,
 	Button,
 	Card,
 	CardActions,
 	CardContent,
 	IconButton,
 	TextField,
+	MenuItem,
+	SelectChangeEvent,
 } from "@mui/material";
 import { Container } from "@mui/system";
 import { useCallback, useEffect, useState } from "react";
@@ -27,30 +30,18 @@ export const StudentAdd = () => {
 		name: "",
 		CNP: 1,
 		favorite_colour: "",
-		GroupId: 1, // TODO: also read the teacher_id from the form (NOT from the user!)
+		GroupId: undefined, // TODO: also read the teacher_id from the form (NOT from the user!)
 	});
 
 	const [groups, setGroups] = useState<Group[]>([]);
 
-	const fetchSuggestions = async (query: string) => {
-		try {
-			const response = await axios.get<Group[]>(
-				`${BACKEND_API_URL}/groups/autocomplete?query=${query}/`
-			);
-			const data = await response.data;
-			setGroups(data);
-		} catch (error) {
-			console.error("Error fetching suggestions:", error);
-		}
-	};
-
-	const debouncedFetchSuggestions = useCallback(debounce(fetchSuggestions, 500), []);
-
 	useEffect(() => {
-		return () => {
-			debouncedFetchSuggestions.cancel();
-		};
-	}, [debouncedFetchSuggestions]);
+        const getGroups = async () => {
+          const response = await axios.get<Group[]>(`${BACKEND_API_URL}/groups/`);
+          setGroups(response.data);
+        };
+        getGroups();
+    }, []);
 
 	const addStudent = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
@@ -59,14 +50,6 @@ export const StudentAdd = () => {
 			navigate("/students");
 		} catch (error) {
 			console.log(error);
-		}
-	};
-
-	const handleInputChange = (event: any, value: any, reason: any) => {
-		console.log("input", value, reason);
-
-		if (reason === "input") {
-			debouncedFetchSuggestions(value);
 		}
 	};
 
@@ -96,30 +79,48 @@ export const StudentAdd = () => {
 						/>
 
 						<TextField
+							id="CNP"
+							label="CNP"
+							variant="outlined"
+							fullWidth
+							sx={{ mb: 2 }}
+							onChange={(event) => setStudent({ ...student, CNP: parseInt(event.target.value) })}
+						/>
+
+						<TextField
 							id="favorite_colour"
 							label="Favorite Color"
 							variant="outlined"
 							fullWidth
 							sx={{ mb: 2 }}
-							onChange={(event) => setStudent({ ...student, name: event.target.value })}
+							onChange={(event) => setStudent({ ...student, favorite_colour: event.target.value })}
 						/>
 
-						<Autocomplete
-							id="GroupId"
-							options={groups}
-							getOptionLabel={(option) => `${option.groupNr} - ${option.specialization}`}
-							renderInput={(params) => <TextField {...params} label="Group" variant="outlined" />}
-							filterOptions={(x) => x}
-							onInputChange={handleInputChange}
-							onChange={(event, value) => {
-								if (value) {
-									console.log(value);
-									setStudent({ ...student, GroupId: value.id });
-								}
-							}}
-						/>
+						<Select
+                            id="GroupId"
+                            value={(student.GroupId as Group)?.id }
+                            onChange={(event: SelectChangeEvent<number>) => {
+                                const groupId = event.target.value as number;
+                                const group = groups.find((group) => group.id === groupId);
+                                setStudent({
+                                  ...student,
+								  GroupId: group?.id,
+                                });
+                              }}
 
-						<Button type="submit" onClick={() => setStudent({ ...student, CNP: 1000000000000 + Math.floor(Math.random() * 9000000000000) })}>
+                            label="Group"
+                            variant="outlined"
+                            fullWidth
+                            sx={{ mb: 2 }}
+                            >
+                            {groups.map((group) => (
+                            <MenuItem key={group.id} value={group.id}>
+                                {group.id};{group.groupNr};<>{group.specialization}</>;{group.language};{group.year}
+                            </MenuItem>
+                            ))}
+                        </Select>
+
+						<Button type="submit">
 							Add Student
 						</Button>
 					</form>

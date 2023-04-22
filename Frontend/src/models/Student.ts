@@ -6,6 +6,5 @@ export interface Student{
     name: string;
     CNP: number;
     favorite_colour: string;
-    GroupId: number;
-    Group?: Group;
+    GroupId?: Group | number;
 }

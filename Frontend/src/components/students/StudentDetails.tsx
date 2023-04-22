@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BACKEND_API_URL } from "../../constants";
 import { Student } from "../../models/Student";
+import { Group } from "../../models/Group";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -37,7 +38,7 @@ export const StudentDetails = () => {
 					<p>Student Name: {student?.name}</p>
 					<p>Student CNP: {student?.CNP}</p>
 					<p>Student favorite color: {student?.favorite_colour}</p>
-					<p><a href={`/groups/${student?.GroupId}/details`} title="View group details">Group{student?.Group?.groupNr}</a></p>
+					<p><a href={`/groups/${student?.GroupId}/details`} title="View group details">Group{(student?.GroupId as Group)?.groupNr}</a></p>
 
 				</CardContent>
 				<CardActions>
