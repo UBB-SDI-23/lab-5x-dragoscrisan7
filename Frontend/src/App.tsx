@@ -14,6 +14,8 @@ import { StudentDetails } from "./components/students/StudentDetails";
 import { StudentDelete } from "./components/students/StudentDelete";
 import { StudentAdd } from "./components/students/StudentAdd";
 import { GroupDetails } from "./components/groups/GroupDetails";
+import { StudentsFiltered } from "./components/students/StudentsFiltered";
+import { StudentUpdate } from './components/students/StudentUpdate';
 
 function App() {
   return (
@@ -24,10 +26,11 @@ function App() {
         <Route path="/" element={<AppHome />} />
 					<Route path="/students" element={<AllStudents />} />
 					<Route path="/students/:studentId/details" element={<StudentDetails />} />
-					<Route path="/students/:studentId/edit" element={<StudentDetails />} />
+					<Route path="/students/:studentId/edit" element={<StudentUpdate />} />
 					<Route path="/students/:studentId/delete" element={<StudentDelete />} />
 					<Route path="/students/add" element={<StudentAdd />} />
           <Route path="groups/:groupId/details" element={<GroupDetails />} />
+          <Route path="students/:studentId/studentsFiltered" element={<StudentsFiltered />} />
         </Routes>
       </Router>
     </React.Fragment>
