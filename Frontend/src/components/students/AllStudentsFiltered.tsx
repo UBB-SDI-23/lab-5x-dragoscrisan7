@@ -23,13 +23,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AddIcon from "@mui/icons-material/Add";
 
-export const AllStudents = () => {
+export const AllStudentsFiltered = () => {
 	const [loading, setLoading] = useState(false);
 	const [students, setStudents] = useState<Student[]>([]);
 
 	useEffect(() => {
 		setLoading(true);
-		fetch(`${BACKEND_API_URL}/students/`)
+		fetch(`${BACKEND_API_URL}/students/?ordering=firstname`)
 			.then((response) => response.json())
 			.then((data) => {
 				setStudents(data);
@@ -51,7 +51,7 @@ export const AllStudents = () => {
 				</IconButton>
 			)}
 			{!loading && (
-				<IconButton component={Link} sx={{ mr: 3 }} to={`/students/filtered`}>
+				<IconButton component={Link} sx={{ mr: 3 }} to={`/students`}>
 					<Tooltip title="Filter" arrow>
 						<MenuIcon color="primary" />
 					</Tooltip>

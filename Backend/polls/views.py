@@ -6,7 +6,7 @@ from django.db.models import Avg, Count
 from .models import Student, Group, Teacher, Subject, Class, GroupFavoriteNumberDto
 from .serializers import StudentSerializer, GroupSerializer, TeacherSerializer, SubjectSerializer, ClassSerializer
 from .serializers import GroupFavoriteNumberSerializer, TeacherNrOfClassesSerializer
-from rest_framework import generics, status
+from rest_framework import generics, status, filters
 
 
 class StudentList(generics.ListCreateAPIView):
@@ -14,6 +14,8 @@ class StudentList(generics.ListCreateAPIView):
     serializer_class = StudentSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = {'CNP': ['gt', 'lt']}
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['firstname', 'name']
 
 
 class StudentDetails(generics.RetrieveUpdateDestroyAPIView):
