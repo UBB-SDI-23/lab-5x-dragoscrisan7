@@ -22,7 +22,7 @@ export const AppMenu = () => {
 						<SchoolIcon />
 					</IconButton>
 					<Typography variant="h6" component="div" sx={{ mr: 5 }}>
-						Groups
+						Students
 					</Typography>
 					<Button
 						variant={path.startsWith("/students") ? "outlined" : "text"}
@@ -32,6 +32,15 @@ export const AppMenu = () => {
 						sx={{ mr: 5 }}
 						startIcon={<LocalLibraryIcon />}>
 						Students
+					</Button>
+					<Button
+						variant={path.startsWith("/teachers") ? "outlined" : "text"}
+						to="/teachers/filtered"
+						component={Link}
+						color="inherit"
+						sx={{ mr: 5 }}
+						startIcon={<LocalLibraryIcon />}>
+						Teachers
 					</Button>
 				</Toolbar>
 			</AppBar>

@@ -8,10 +8,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ReadMoreIcon from "@mui/icons-material/ReadMore";
+import { GroupsFiltered } from "../../models/GroupsFiltered";
 
-export const GroupDetails = () => {
-    return (
-        <Container>
-        </Container>
-    );
+export const GroupShowAll = () => {
+    const [loading, setLoading] = useState(false);
+	const [groupsFiltered, setGroupsFiltered] = useState<GroupsFiltered[]>([]);
+	<Container>
+
+    </Container>
 };
