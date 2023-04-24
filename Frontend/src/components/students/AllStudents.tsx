@@ -26,6 +26,9 @@ import AddIcon from "@mui/icons-material/Add";
 export const AllStudents = () => {
 	const [loading, setLoading] = useState(false);
 	const [students, setStudents] = useState<Student[]>([]);
+	const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
+	const [chosenStudents, setChosenStudents] = useState<Student[]>([]);
+	const [isFiltered, setIsFiltered] = useState(true);
 
 	useEffect(() => {
 		setLoading(true);
@@ -33,16 +36,30 @@ export const AllStudents = () => {
 			.then((response) => response.json())
 			.then((data) => {
 				setStudents(data);
+				const filteredData = [...data].sort((a, b) => a.firstname.localeCompare(b.firstname));
+				setChosenStudents(data);
+				setFilteredStudents(filteredData);
 				setLoading(false);
 			});
 	}, []);
+
+	const clearFilter = () => {
+		if(isFiltered){
+			setChosenStudents(filteredStudents);
+			setIsFiltered(false);
+		}
+		else{
+			setChosenStudents(students);
+			setIsFiltered(true);
+		}
+	}
 
 	return (
 		<Container>
 			<h1>All students</h1>
 
 			{loading && <CircularProgress />}
-			{!loading && students.length === 0 && <p>No students found</p>}
+			{!loading && chosenStudents.length === 0 && <p>No students found</p>}
 			{!loading && (
 				<IconButton component={Link} sx={{ mr: 3 }} to={`/students/add`}>
 					<Tooltip title="Add a new student" arrow>
@@ -51,13 +68,15 @@ export const AllStudents = () => {
 				</IconButton>
 			)}
 			{!loading && (
-				<IconButton component={Link} sx={{ mr: 3 }} to={`/students/filtered`}>
-					<Tooltip title="Filter" arrow>
-						<MenuIcon color="primary" />
-					</Tooltip>
-				</IconButton>
-			)}
-			{!loading && students.length > 0 && (
+        	<>
+            	<IconButton onClick={clearFilter} sx={{ mr: 3 }}>
+                	<Tooltip title={isFiltered ? "Filter" : "Clear Filter"} arrow>
+                    	<MenuIcon color="primary" />
+                	</Tooltip>
+            	</IconButton>
+        	</>
+    		)}
+			{!loading && chosenStudents.length > 0 && (
 				<TableContainer component={Paper}>
 					<Table sx={{ minWidth: 650 }} aria-label="simple table">
 						<TableHead>
@@ -70,7 +89,7 @@ export const AllStudents = () => {
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{students.map((student, index) => (
+							{chosenStudents.map((student, index) => (
 								<TableRow key={student.id}>
 									<TableCell component="th" scope="row">
 										{index + 1}
